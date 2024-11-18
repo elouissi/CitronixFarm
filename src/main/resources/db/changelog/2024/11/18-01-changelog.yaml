@@ -1,0 +1,506 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1731924088502-1
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createSequence:
+            incrementBy: 50
+            sequenceName: arbre_seq
+            startValue: 1
+  - changeSet:
+      id: 1731924088502-2
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createSequence:
+            incrementBy: 50
+            sequenceName: champ_seq
+            startValue: 1
+  - changeSet:
+      id: 1731924088502-3
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createSequence:
+            incrementBy: 50
+            sequenceName: detail_recolte_seq
+            startValue: 1
+  - changeSet:
+      id: 1731924088502-4
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createSequence:
+            incrementBy: 50
+            sequenceName: ferme_seq
+            startValue: 1
+  - changeSet:
+      id: 1731924088502-5
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createSequence:
+            incrementBy: 50
+            sequenceName: recolte_seq
+            startValue: 1
+  - changeSet:
+      id: 1731924088502-6
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createSequence:
+            incrementBy: 50
+            sequenceName: vente_seq
+            startValue: 1
+  - changeSet:
+      id: 1731924088502-7
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_arbre
+                  name: id
+                  type: INT
+              - column:
+                  name: date_plantation
+                  type: DATE
+              - column:
+                  name: champ_id
+                  type: INT
+            tableName: arbre
+  - changeSet:
+      id: 1731924088502-8
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                  name: arbre_id
+                  type: INT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: detail_recoltes_id
+                  type: INT
+            tableName: arbre_detail_recoltes
+  - changeSet:
+      id: 1731924088502-9
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_champ
+                  name: id
+                  type: INT
+              - column:
+                  name: superficie
+                  type: FLOAT
+              - column:
+                  name: ferme_id
+                  type: INT
+            tableName: champ
+  - changeSet:
+      id: 1731924088502-10
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                  name: champ_id
+                  type: INT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: arbres_id
+                  type: INT
+            tableName: champ_arbres
+  - changeSet:
+      id: 1731924088502-11
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_detailrecolte
+                  name: id
+                  type: INT
+              - column:
+                  name: quantite_recoltee
+                  type: FLOAT
+              - column:
+                  name: arbre_id
+                  type: INT
+              - column:
+                  name: recolte_id
+                  type: INT
+            tableName: detail_recolte
+  - changeSet:
+      id: 1731924088502-12
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_ferme
+                  name: id
+                  type: INT
+              - column:
+                  name: nom
+                  type: VARCHAR(255)
+              - column:
+                  name: superficie
+                  type: FLOAT
+              - column:
+                  name: date_creation
+                  type: DATE
+              - column:
+                  name: localisation
+                  type: VARCHAR(255)
+            tableName: ferme
+  - changeSet:
+      id: 1731924088502-13
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                  name: ferme_id
+                  type: INT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: champs_id
+                  type: INT
+            tableName: ferme_champs
+  - changeSet:
+      id: 1731924088502-14
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_recolte
+                  name: id
+                  type: INT
+              - column:
+                  name: quantite_totale
+                  type: FLOAT
+              - column:
+                  name: date_recolte
+                  type: DATE
+              - column:
+                  name: saison
+                  type: VARCHAR(255)
+            tableName: recolte
+  - changeSet:
+      id: 1731924088502-15
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                  name: recolte_id
+                  type: INT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: detail_recoltes_id
+                  type: INT
+            tableName: recolte_detail_recoltes
+  - changeSet:
+      id: 1731924088502-16
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                  name: recolte_id
+                  type: INT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: ventes_id
+                  type: INT
+            tableName: recolte_ventes
+  - changeSet:
+      id: 1731924088502-17
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_vente
+                  name: id
+                  type: INT
+              - column:
+                  name: date_vente
+                  type: DATE
+              - column:
+                  name: client
+                  type: VARCHAR(255)
+              - column:
+                  name: revenu
+                  type: FLOAT
+              - column:
+                  name: quantite
+                  type: FLOAT
+              - column:
+                  name: prix_unitaire
+                  type: FLOAT
+              - column:
+                  name: recolte_id
+                  type: INT
+            tableName: vente
+  - changeSet:
+      id: 1731924088502-18
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addUniqueConstraint:
+            columnNames: detail_recoltes_id
+            constraintName: uc_arbre_detail_recoltes_detailrecoltes
+            tableName: arbre_detail_recoltes
+  - changeSet:
+      id: 1731924088502-19
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addUniqueConstraint:
+            columnNames: arbres_id
+            constraintName: uc_champ_arbres_arbres
+            tableName: champ_arbres
+  - changeSet:
+      id: 1731924088502-20
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addUniqueConstraint:
+            columnNames: champs_id
+            constraintName: uc_ferme_champs_champs
+            tableName: ferme_champs
+  - changeSet:
+      id: 1731924088502-21
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addUniqueConstraint:
+            columnNames: detail_recoltes_id
+            constraintName: uc_recolte_detail_recoltes_detailrecoltes
+            tableName: recolte_detail_recoltes
+  - changeSet:
+      id: 1731924088502-22
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addUniqueConstraint:
+            columnNames: ventes_id
+            constraintName: uc_recolte_ventes_ventes
+            tableName: recolte_ventes
+  - changeSet:
+      id: 1731924088502-23
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: champ_id
+            baseTableName: arbre
+            constraintName: FK_ARBRE_ON_CHAMP
+            referencedColumnNames: id
+            referencedTableName: champ
+  - changeSet:
+      id: 1731924088502-24
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: ferme_id
+            baseTableName: champ
+            constraintName: FK_CHAMP_ON_FERME
+            referencedColumnNames: id
+            referencedTableName: ferme
+  - changeSet:
+      id: 1731924088502-25
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: arbre_id
+            baseTableName: detail_recolte
+            constraintName: FK_DETAILRECOLTE_ON_ARBRE
+            referencedColumnNames: id
+            referencedTableName: arbre
+  - changeSet:
+      id: 1731924088502-26
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: recolte_id
+            baseTableName: detail_recolte
+            constraintName: FK_DETAILRECOLTE_ON_RECOLTE
+            referencedColumnNames: id
+            referencedTableName: recolte
+  - changeSet:
+      id: 1731924088502-27
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: recolte_id
+            baseTableName: vente
+            constraintName: FK_VENTE_ON_RECOLTE
+            referencedColumnNames: id
+            referencedTableName: recolte
+  - changeSet:
+      id: 1731924088502-28
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: arbre_id
+            baseTableName: arbre_detail_recoltes
+            constraintName: fk_arbdetrec_on_arbre
+            referencedColumnNames: id
+            referencedTableName: arbre
+  - changeSet:
+      id: 1731924088502-29
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: detail_recoltes_id
+            baseTableName: arbre_detail_recoltes
+            constraintName: fk_arbdetrec_on_detail_recolte
+            referencedColumnNames: id
+            referencedTableName: detail_recolte
+  - changeSet:
+      id: 1731924088502-30
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: arbres_id
+            baseTableName: champ_arbres
+            constraintName: fk_chaarb_on_arbre
+            referencedColumnNames: id
+            referencedTableName: arbre
+  - changeSet:
+      id: 1731924088502-31
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: champ_id
+            baseTableName: champ_arbres
+            constraintName: fk_chaarb_on_champ
+            referencedColumnNames: id
+            referencedTableName: champ
+  - changeSet:
+      id: 1731924088502-32
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: champs_id
+            baseTableName: ferme_champs
+            constraintName: fk_fercha_on_champ
+            referencedColumnNames: id
+            referencedTableName: champ
+  - changeSet:
+      id: 1731924088502-33
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: ferme_id
+            baseTableName: ferme_champs
+            constraintName: fk_fercha_on_ferme
+            referencedColumnNames: id
+            referencedTableName: ferme
+  - changeSet:
+      id: 1731924088502-34
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: detail_recoltes_id
+            baseTableName: recolte_detail_recoltes
+            constraintName: fk_recdetrec_on_detail_recolte
+            referencedColumnNames: id
+            referencedTableName: detail_recolte
+  - changeSet:
+      id: 1731924088502-35
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: recolte_id
+            baseTableName: recolte_detail_recoltes
+            constraintName: fk_recdetrec_on_recolte
+            referencedColumnNames: id
+            referencedTableName: recolte
+  - changeSet:
+      id: 1731924088502-36
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: recolte_id
+            baseTableName: recolte_ventes
+            constraintName: fk_recven_on_recolte
+            referencedColumnNames: id
+            referencedTableName: recolte
+  - changeSet:
+      id: 1731924088502-37
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: ventes_id
+            baseTableName: recolte_ventes
+            constraintName: fk_recven_on_vente
+            referencedColumnNames: id
+            referencedTableName: vente
+
