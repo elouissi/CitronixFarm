@@ -1,9 +1,14 @@
 package com.elouissi.sitronix.domain;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.util.List;
-
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Champ {
     @Id
@@ -12,7 +17,9 @@ public class Champ {
 
     private Float superficie;
     @ManyToOne
+    @JoinColumn(name = "ferme_id")
     private Ferme ferme;
+
     @OneToMany
     private List<Arbre> arbres;
 }

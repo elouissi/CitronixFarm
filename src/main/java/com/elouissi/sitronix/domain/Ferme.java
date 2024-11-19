@@ -1,10 +1,15 @@
 package com.elouissi.sitronix.domain;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.List;
-
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Ferme {
     @Id
@@ -14,6 +19,7 @@ public class Ferme {
     private Float superficie;
     private LocalDate date_creation;
     private String localisation;
-    @OneToMany
+    @OneToMany(mappedBy = "ferme", cascade = CascadeType.ALL)
     private List<Champ> champs;
+
 }

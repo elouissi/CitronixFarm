@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface FermeRepository extends JpaRepository<Ferme,Integer> {
+    public Ferme getFermeById(Integer id);
 }
