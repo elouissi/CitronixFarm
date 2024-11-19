@@ -17,15 +17,7 @@ public class FermeService implements FermeInterface {
 
     @Override
     public Ferme save(Ferme ferme) {
-        Ferme savedFerme = fermeRepository.save(ferme);
-
-        if (ferme.getChamps() != null && !ferme.getChamps().isEmpty()) {
-            for (Champ champ : ferme.getChamps()) {
-                champ.setFerme(savedFerme);
-                champRepository.save(champ);
-            }
-        }
-        return savedFerme;
+        return fermeRepository.save(ferme);
     }
 
 
