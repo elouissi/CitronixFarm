@@ -43,4 +43,14 @@ public class ChampService implements ChampInterface {
         }
         champRepository.delete(champ);
     }
+    public static Float calculerSommeSuperficiesChamps(Ferme ferme) {
+        if (ferme == null || ferme.getChamps() == null) {
+            return 0f;
+        }
+        return ferme.getChamps().stream()
+                .map(Champ::getSuperficie)
+                .filter(superficie -> superficie != null)
+                .reduce(0f, Float::sum);
+    }
+
 }
