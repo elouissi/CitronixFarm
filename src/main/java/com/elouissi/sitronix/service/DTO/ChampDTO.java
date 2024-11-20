@@ -1,17 +1,16 @@
-package com.elouissi.sitronix.web.rest.VM;
+package com.elouissi.sitronix.service.DTO;
 
-import jakarta.validation.constraints.*;
 import lombok.*;
+
+
 
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ChampVM {
+public class ChampDTO {
 
 
-    @NotNull(message = "La superficie est requise")
-    @PositiveOrZero(message = "La superficie doit être positive ou égale à zéro")
     private Float superficie;
 
     public Float getSuperficie() {

@@ -4,8 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
-@Getter
-@Setter
+
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,4 +21,36 @@ public class Champ {
 
     @OneToMany
     private List<Arbre> arbres;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Float getSuperficie() {
+        return superficie;
+    }
+
+    public void setSuperficie(Float superficie) {
+        this.superficie = superficie;
+    }
+
+    public Ferme getFerme() {
+        return ferme;
+    }
+
+    public void setFerme(Ferme ferme) {
+        this.ferme = ferme;
+    }
+
+    public List<Arbre> getArbres() {
+        return arbres;
+    }
+
+    public void setArbres(List<Arbre> arbres) {
+        this.arbres = arbres;
+    }
 }

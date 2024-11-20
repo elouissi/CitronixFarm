@@ -8,7 +8,7 @@ services:
       - 'POSTGRES_PASSWORD=password'
       - 'POSTGRES_USER=sitronix'
     ports:
-      - '5434:5432'  # Notez que le port interne de PostgreSQL est 5432
+      - '5434:5432'
 volumes:
   postgres_data:
     driver: local

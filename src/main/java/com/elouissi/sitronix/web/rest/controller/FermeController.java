@@ -29,7 +29,8 @@ public class FermeController {
       try {
           Ferme ferme = fermeMapper.ToEntity(fermeVM);
           Ferme ferme1 = fermeService.save(ferme);
-          return ResponseEntity.ok(ferme1);
+          FermeDTO fermeDTO = fermeMapper.toDTO(ferme1);
+          return ResponseEntity.ok(fermeDTO);
       } catch (ChampsPresentException e) {
           return ResponseEntity.badRequest().body(e.getMessage());
       }
