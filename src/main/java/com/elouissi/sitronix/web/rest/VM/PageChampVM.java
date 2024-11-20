@@ -1,16 +1,14 @@
 package com.elouissi.sitronix.web.rest.VM;
 
-import jakarta.validation.constraints.*;
-import lombok.*;
-
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
-public class ChampVM {
+public class PageChampVM {
 
 
-    @NotNull(message = "La superficie est requise")
-    @PositiveOrZero(message = "La superficie doit être positive ou égale à zéro")
     private Float superficie;
 
     public Float getSuperficie() {

@@ -1,10 +1,6 @@
 package com.elouissi.sitronix.service.DTO;
 
 import lombok.*;
-
-
-
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder

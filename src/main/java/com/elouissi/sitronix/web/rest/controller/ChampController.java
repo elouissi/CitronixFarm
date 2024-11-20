@@ -9,6 +9,7 @@ import com.elouissi.sitronix.web.rest.VM.ChampVM;
 import com.elouissi.sitronix.web.rest.VM.mapper.ChampMapper;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,6 +31,16 @@ public class ChampController {
     public ResponseEntity<?> saveChamp(@RequestBody @Valid ChampVM champVM, @PathVariable Integer id) {
         Ferme ferme = fermeService.getFermeId(id);
         Champ champ = champMapper.toEntity(champVM);
+        Float nouvelleSommeSuperficies = champService.calculerSommeSuperficiesChamps(ferme) + champ.getSuperficie();
+        Float moitier = ferme.getSuperficie() * 0.5f;
+        if (champ.getSuperficie() >= moitier){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("La superficie de la champ dépasse la moitier de la ferme.");
+        }
+        if (nouvelleSommeSuperficies >= ferme.getSuperficie()){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("La somme des superficies des champs dépasse la superficie totale de la ferme.");
+        }
         Champ champ1 = champService.save(champ, ferme);
         ChampDTO champDTO = champMapper.toDTO(champ1);
         return ResponseEntity.ok(champDTO);
