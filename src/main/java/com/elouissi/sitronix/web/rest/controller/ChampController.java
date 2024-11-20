@@ -45,5 +45,15 @@ public class ChampController {
         ChampDTO champDTO = champMapper.toDTO(champ1);
         return ResponseEntity.ok(champDTO);
     }
+    @GetMapping("/delete/{id}")
+    public ResponseEntity<?> delete(@PathVariable Integer id){
+        try {
+            Champ champ = champService.getChampId(id);
+            champService.delete(champ);
+            return ResponseEntity.ok("Champ supprimée avec succès.");
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body("Erreur lors de la suppression : " + e.getMessage());
+        }
+    }
 
 }

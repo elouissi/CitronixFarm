@@ -27,6 +27,10 @@ public class ChampService implements ChampInterface {
 
         return champRepository.save(champ);
     }
+    public Champ getChampId(Integer id) {
+        return champRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Champ avec ID " + id + " non trouvée"));
+    }
 
     @Override
     public Optional<Champ> deleteByFerme(Ferme ferme) {
