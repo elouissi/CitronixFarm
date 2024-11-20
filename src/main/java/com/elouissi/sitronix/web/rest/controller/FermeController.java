@@ -11,10 +11,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/ferme")
@@ -34,5 +31,16 @@ public class FermeController {
       } catch (ChampsPresentException e) {
           return ResponseEntity.badRequest().body(e.getMessage());
       }
+  }
+  @GetMapping("/delete/{id}")
+    public ResponseEntity<String> delete( @PathVariable Integer id){
+      try {
+          Ferme ferme = fermeService.getFermeId(id);
+          fermeService.delete(ferme);
+          return ResponseEntity.ok("Ferme supprimée avec succès.");
+      } catch (RuntimeException e) {
+          return ResponseEntity.badRequest().body("Erreur lors de la suppression : " + e.getMessage());
+      }
+
   }
 }
