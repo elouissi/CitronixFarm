@@ -32,6 +32,15 @@ public class FermeController {
           return ResponseEntity.badRequest().body(e.getMessage());
       }
   }
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateFerme(@PathVariable Integer id, @RequestBody Ferme ferme) {
+        try {
+            Ferme updatedFerme = fermeService.update(ferme, id);
+            return ResponseEntity.ok("la ferme est bien modifier  de l'id"+updatedFerme.getId());
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
   @GetMapping("/delete/{id}")
     public ResponseEntity<String> delete( @PathVariable Integer id){
       try {

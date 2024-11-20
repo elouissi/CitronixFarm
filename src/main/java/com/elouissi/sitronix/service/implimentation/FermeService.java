@@ -15,11 +15,10 @@ import java.util.Optional;
 public class FermeService implements FermeInterface {
 
     private final FermeRepository fermeRepository;
-    private final ChampService champService;
 
     public FermeService(FermeRepository fermeRepository, ChampService champService) {
         this.fermeRepository = fermeRepository;
-        this.champService = champService;
+
     }
 
     @Override
