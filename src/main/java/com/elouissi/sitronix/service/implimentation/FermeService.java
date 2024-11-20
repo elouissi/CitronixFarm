@@ -2,21 +2,22 @@ package com.elouissi.sitronix.service.implimentation;
 
 import com.elouissi.sitronix.domain.Champ;
 import com.elouissi.sitronix.domain.Ferme;
-import com.elouissi.sitronix.repository.ChampRepository;
 import com.elouissi.sitronix.repository.FermeRepository;
 import com.elouissi.sitronix.service.FermeInterface;
-import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 @Service
 public class FermeService implements FermeInterface {
 
     private final FermeRepository fermeRepository;
 
-    public FermeService(FermeRepository fermeRepository, ChampService champService) {
+
+
+    public FermeService(FermeRepository fermeRepository) {
         this.fermeRepository = fermeRepository;
 
     }
@@ -50,11 +51,16 @@ public class FermeService implements FermeInterface {
         }
         fermeRepository.delete(ferme);
     }
+    public Page<Ferme> getAllFermes(Pageable pageable) {
+        return fermeRepository.findAll(pageable);
+
+    }
 
     @Override
     public Ferme getFermeId(Integer id) {
         return fermeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Ferme avec ID " + id + " non trouvée"));
     }
+
 
 }

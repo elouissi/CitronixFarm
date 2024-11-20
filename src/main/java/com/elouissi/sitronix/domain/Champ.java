@@ -53,4 +53,6 @@ public class Champ {
     public void setArbres(List<Arbre> arbres) {
         this.arbres = arbres;
     }
+
+
 }
