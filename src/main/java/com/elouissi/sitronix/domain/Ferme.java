@@ -18,7 +18,7 @@ public class Ferme {
     private Float superficie;
     private LocalDate date_creation;
     private String localisation;
-    @OneToMany(mappedBy = "ferme", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "ferme")
     private List<Champ> champs;
 
     public Integer getId() {

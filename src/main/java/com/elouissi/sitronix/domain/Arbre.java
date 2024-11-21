@@ -11,6 +11,49 @@ public class Arbre {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private LocalDate date_plantation;
+
+    public Arbre(Integer id, LocalDate date_plantation, Champ champ, List<DetailRecolte> detailRecoltes) {
+        this.id = id;
+        this.date_plantation = date_plantation;
+        this.champ = champ;
+        this.detailRecoltes = detailRecoltes;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public LocalDate getDate_plantation() {
+        return date_plantation;
+    }
+
+    public void setDate_plantation(LocalDate date_plantation) {
+        this.date_plantation = date_plantation;
+    }
+
+    public Champ getChamp() {
+        return champ;
+    }
+
+    public void setChamp(Champ champ) {
+        this.champ = champ;
+    }
+
+    public List<DetailRecolte> getDetailRecoltes() {
+        return detailRecoltes;
+    }
+
+    public void setDetailRecoltes(List<DetailRecolte> detailRecoltes) {
+        this.detailRecoltes = detailRecoltes;
+    }
+
+    public Arbre() {
+    }
+
     @ManyToOne
     private Champ champ;
     @OneToMany
