@@ -27,19 +27,20 @@ public class FermeController {
     private FermeMapper fermeMapper;
 
   @PostMapping("/save")
-  public ResponseEntity<?>save(@RequestBody @Valid FermeVM fermeVM){
+  public ResponseEntity<?>save(@RequestBody @Valid FermeDTO fermeDTO){
       try {
-          Ferme ferme = fermeMapper.ToEntity(fermeVM);
+          Ferme ferme = fermeMapper.ToEntity(fermeDTO);
           Ferme ferme1 = fermeService.save(ferme);
-          FermeDTO fermeDTO = fermeMapper.toDTO(ferme1);
-          return ResponseEntity.ok(fermeDTO);
+          FermeVM fermeVM = fermeMapper.toVM(ferme1);
+          return ResponseEntity.ok(fermeVM);
       } catch (ChampsPresentException e) {
           return ResponseEntity.badRequest().body(e.getMessage());
       }
   }
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateFerme(@PathVariable Integer id, @RequestBody Ferme ferme) {
+    public ResponseEntity<?> updateFerme(@PathVariable Integer id, @RequestBody FermeDTO fermeDTO) {
         try {
+            Ferme ferme = fermeMapper.ToEntity(fermeDTO);
             Ferme updatedFerme = fermeService.update(ferme, id);
             return ResponseEntity.ok("la ferme est bien modifier  de l'id"+updatedFerme.getId());
         } catch (RuntimeException e) {
