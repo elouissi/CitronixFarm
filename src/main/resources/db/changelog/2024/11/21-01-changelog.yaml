@@ -1,0 +1,56 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1732144825455-1
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_ferme
+                  name: id
+                  type: INT
+              - column:
+                  name: nom
+                  type: VARCHAR(255)
+              - column:
+                  name: superficie
+                  type: FLOAT
+              - column:
+                  name: date_creation
+                  type: DATE
+              - column:
+                  name: localisation
+                  type: VARCHAR(255)
+            tableName: ferme
+  - changeSet:
+      id: 1732144825455-2
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: ferme_id
+            baseTableName: champ
+            constraintName: FK_CHAMP_ON_FERME
+            referencedColumnNames: id
+            referencedTableName: ferme
+  - changeSet:
+      id: 1732144825455-3
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: ferme_champs
+            constraintName: fk_fercha_on_champ
+  - changeSet:
+      id: 1732144825455-5
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropTable:
+            cascadeConstraints: true
+            tableName: ferme_champs
+
