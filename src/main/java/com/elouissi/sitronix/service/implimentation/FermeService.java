@@ -14,11 +14,13 @@ import org.springframework.stereotype.Service;
 public class FermeService implements FermeInterface {
 
     private final FermeRepository fermeRepository;
+    private final ChampService champService;
 
 
 
-    public FermeService(FermeRepository fermeRepository) {
+    public FermeService(FermeRepository fermeRepository,ChampService champService) {
         this.fermeRepository = fermeRepository;
+        this.champService = champService;
 
     }
 
@@ -49,6 +51,7 @@ public class FermeService implements FermeInterface {
         if (ferme == null) {
             throw new IllegalArgumentException("La ferme à supprimer ne peut pas être null.");
         }
+        champService.deleteByFerme(ferme);
         fermeRepository.delete(ferme);
     }
     public Page<Ferme> getAllFermes(Pageable pageable) {

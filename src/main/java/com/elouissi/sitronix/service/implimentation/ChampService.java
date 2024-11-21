@@ -56,5 +56,19 @@ public class ChampService implements ChampInterface {
                 .filter(superficie -> superficie != null)
                 .reduce(0f, Float::sum);
     }
+    public Champ update(Champ champ, Integer id) {
+        Champ existingChamp = champRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Champ avec ID " + id + " non trouvée"));
+
+        if (champ.getSuperficie() != null) {
+            existingChamp.setSuperficie(champ.getSuperficie());
+        }
+
+        if (champ.getArbres() != null) {
+            existingChamp.setArbres(champ.getArbres());
+        }
+
+        return champRepository.save(existingChamp);
+    }
 
 }
