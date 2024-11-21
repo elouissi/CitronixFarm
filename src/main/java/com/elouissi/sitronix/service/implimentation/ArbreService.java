@@ -28,9 +28,12 @@ public class ArbreService implements ArbreInterface {
         if (champ == null) {
             throw new EntityNotFoundException("Champ avec ID " + champId + " non trouvé.");
         }
+
         Integer some = champ.getArbres().size();
-        Integer nombreHectar = (int) (champ.getSuperficie() / 1000);
-        int division = some / nombreHectar;
+        Float nombreHectar =  (champ.getSuperficie() );
+        int division = (int) (some / nombreHectar);
+
+
         if ( division > 100){
             throw new IllegalArgumentException("vous avez dépasser Le nombre des arbres par hectar.");
 
