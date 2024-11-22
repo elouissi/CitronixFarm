@@ -5,11 +5,13 @@ import com.elouissi.sitronix.domain.enums.Saison;
 import com.elouissi.sitronix.repository.RecolteRepository;
 import com.elouissi.sitronix.service.RecolteInterface;
 import com.elouissi.sitronix.utils.SaisonUtil;
-import org.apache.commons.lang3.time.DateUtils;
+import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class RecolteService implements RecolteInterface {
 
 private final RecolteRepository recolteRepository;
@@ -34,7 +36,7 @@ private final RecolteRepository recolteRepository;
 
     @Override
     public Optional<Recolte> findById(Integer id) {
-        return Optional.empty();
+        return recolteRepository.findById(id);
     }
 
     @Override
@@ -53,14 +55,26 @@ private final RecolteRepository recolteRepository;
     }
 
     @Override
-    public List<Recolte> findBySaison(String saison) {
-        return null;
+    public List<Recolte> findBySaison(Saison saison) {
+        return recolteRepository.getRecoltesBySaison(saison);
     }
 
     @Override
     public boolean isValidRecolteForSeason(Recolte recolte) {
-        return false;
+        if (recolte == null || recolte.getDate_recolte() == null || recolte.getSaison() == null) {
+            throw new IllegalArgumentException("La récolte, sa date ou sa saison ne peuvent pas être nulles.");
+        }
+
+        LocalDate date = recolte.getDate_recolte();
+        Saison saison = recolte.getSaison();
+
+        return !recolteRepository.existsBySaisonAndDateRecolteInRange(
+                saison,
+                date.withDayOfYear(1),
+                date.withDayOfYear(date.lengthOfYear())
+        );
     }
+
 
     @Override
     public Float calculateTotalQuantity(Integer recolteId) {

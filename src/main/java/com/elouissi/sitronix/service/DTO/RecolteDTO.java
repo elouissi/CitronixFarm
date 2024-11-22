@@ -20,7 +20,6 @@ public class RecolteDTO {
     }
 
     @NotNull(message = "Date is required")
-    @Future(message = "Date must be in the future")
     private LocalDate date_recolte;
 
 }
