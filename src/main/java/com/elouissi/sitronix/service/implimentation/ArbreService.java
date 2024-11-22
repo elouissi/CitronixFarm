@@ -59,9 +59,8 @@ public class ArbreService implements ArbreInterface {
                 .orElseThrow(() -> new RuntimeException("Arbre avec ID " + id + " non trouvée"));
     }
     public Integer getAge(Arbre arbre){
-        LocalDate dateArbre = arbre.getDate_plantation();
-        Period age = Period.between(dateArbre,LocalDate.now());
-        return age.getYears();
+
+        return arbre.getAge();
 
     }
 

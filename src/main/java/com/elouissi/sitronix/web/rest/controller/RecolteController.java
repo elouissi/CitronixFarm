@@ -44,5 +44,10 @@ public class RecolteController {
         List<Recolte> recolteList = recolteService.findBySaison(saison);
         return ResponseEntity.ok(recolteList.stream().map(recolteMapper::toVM).toList());
     }
+    @PutMapping("/recolte/{id}")
+    public ResponseEntity<Recolte> updateRecolte(@PathVariable Integer id, @RequestBody Recolte recolteDetails) {
+        Recolte updatedRecolte = recolteService.update(id, recolteDetails);
+        return ResponseEntity.ok(updatedRecolte);
+    }
 
 }

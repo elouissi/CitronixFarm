@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -43,11 +44,31 @@ private final RecolteRepository recolteRepository;
     public List<Recolte> findAll() {
         return null;
     }
-
     @Override
-    public Recolte update(Integer id, Recolte recolte) {
-        return null;
+    public Recolte update(Integer id, Recolte recolteDetails) {
+        Recolte recolteExistante = this.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Recolte avec l'ID " + id + " n'a pas été trouvée."));
+
+        if (recolteDetails.getDate_recolte() != null) {
+            recolteExistante.setDate_recolte(recolteDetails.getDate_recolte());
+        }
+
+        if (recolteDetails.getQuantite_totale() != null) {
+            recolteExistante.setQuantite_totale(recolteDetails.getQuantite_totale());
+        }
+
+        if (recolteDetails.getDetailRecoltes() != null) {
+            recolteExistante.setDetailRecoltes(recolteDetails.getDetailRecoltes());
+        }
+        if (recolteDetails.getSaison() != null) {
+            recolteExistante.setSaison(recolteDetails.getSaison());
+        }
+        if (recolteDetails.getVentes() != null) {
+            recolteExistante.setVentes(recolteDetails.getVentes());
+        }
+        return recolteRepository.save(recolteExistante);
     }
+
 
     @Override
     public void delete(Integer id) {
