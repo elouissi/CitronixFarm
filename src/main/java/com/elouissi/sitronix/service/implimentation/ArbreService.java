@@ -9,6 +9,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.Optional;
 
 @Service
@@ -34,13 +35,20 @@ public class ArbreService implements ArbreInterface {
         int division = (int) (some / nombreHectar);
 
 
+        int currentMonth = LocalDate.now().minusMonths(7).getMonthValue();
+        if (currentMonth < 3 || currentMonth >5)
+        {
+            throw new IllegalArgumentException("voous devez creer une arbre dans la date de plantation entre mai et mars");
+        }
+
+
         if ( division > 100){
             throw new IllegalArgumentException("vous avez dépasser Le nombre des arbres par hectar.");
 
         }
 
         Arbre arbre = new Arbre();
-        arbre.setDate_plantation(LocalDate.now());
+        arbre.setDate_plantation(LocalDate.now().minusMonths(7));
 
         arbre.setChamp(champ);
         champ.getArbres().add(arbre);
@@ -49,6 +57,11 @@ public class ArbreService implements ArbreInterface {
     public Arbre getArbreId(Integer id) {
         return arbreRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Arbre avec ID " + id + " non trouvée"));
+    }
+    public Integer getAge(Arbre arbre){
+
+        return arbre.getAge();
+
     }
 
     @Override
@@ -66,17 +79,17 @@ public class ArbreService implements ArbreInterface {
         }
         arbreRepository.delete(arbre);
     }
-    public Arbre update(Arbre arbre, Integer id) {
-        Arbre existingArbre = arbreRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Arbre avec ID " + id + " non trouvée"));
-
-        if (arbre.getChamp() != null) {
-            existingArbre.setChamp(arbre.getChamp());
+    public Arbre update(Integer idArbre, Integer idChamp) {
+        Arbre existingArbre = arbreRepository.findById(idArbre)
+                .orElseThrow(() -> new RuntimeException("Arbre avec ID " + idArbre + " non trouvée"));
+        Champ champ = champService.getChampId(idChamp);
+        if (champ == null){
+            throw new NullPointerException("le champ ne trouve pas");
+        }
+        if (existingArbre.getChamp() != null) {
+            existingArbre.setChamp(champ);
         }
 
-        if (arbre.getDetailRecoltes() != null) {
-            existingArbre.setDetailRecoltes(arbre.getDetailRecoltes());
-        }
 
         return arbreRepository.save(existingArbre);
     }
