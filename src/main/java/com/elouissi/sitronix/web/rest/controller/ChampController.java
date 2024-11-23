@@ -28,10 +28,10 @@ public class ChampController {
     }
 
     @PostMapping("/save/{id}")
-    public ResponseEntity<?> saveChamp(@RequestBody @Valid ChampVM champVM, @PathVariable Integer id) {
+    public ResponseEntity<?> saveChamp(@RequestBody @Valid ChampDTO champDTO, @PathVariable Integer id) {
         try {
         Ferme ferme = fermeService.getFermeId(id);
-        Champ champ = champMapper.toEntity(champVM);
+        Champ champ = champMapper.toEntity(champDTO);
         Float nouvelleSommeSuperficies = champService.calculerSommeSuperficiesChamps(ferme) + champ.getSuperficie();
         Float moitier = ferme.getSuperficie() * 0.5f;
         if (champ.getSuperficie() >= moitier){
@@ -43,8 +43,8 @@ public class ChampController {
                     .body("La somme des superficies des champs dépasse la superficie totale de la ferme.");
         }
         Champ champ1 = champService.save(champ, ferme);
-        ChampDTO champDTO = champMapper.toDTO(champ1);
-        return ResponseEntity.ok(champDTO);
+        ChampVM champVM = champMapper.toVM(champ1);
+        return ResponseEntity.ok(champVM);
     } catch (RuntimeException e) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body("Ferme avec ID " + id + " non trouvée : " + e.getMessage());
@@ -61,9 +61,9 @@ public class ChampController {
         }
     }
     @PutMapping("{id}")
-    public ResponseEntity<?> update(@PathVariable Integer id ,@RequestBody ChampVM champVM){
+    public ResponseEntity<?> update(@PathVariable Integer id ,@RequestBody ChampDTO champDTO){
         try {
-            Champ champ =champMapper.toEntity(champVM);
+            Champ champ =champMapper.toEntity(champDTO);
             Champ updatedChamp = champService.update(champ, id);
             return ResponseEntity.ok("la champ est bien modifier  de l'id"+ updatedChamp.getId());
         } catch (RuntimeException e) {

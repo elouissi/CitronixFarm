@@ -25,9 +25,10 @@ public class ArbreController {
 
     }
 
-    @GetMapping("/save/{id}")
-    public ResponseEntity<?> saveArbre(@PathVariable Integer id) {
+    @PostMapping("/save")
+    public ResponseEntity<?> saveArbre(@RequestBody Integer id) {
         try {
+
             Arbre arbre1 = arbreService.saveArbre(id);
             ArbreVM arbreVM = arbreMapper.toVM(arbre1);
             return ResponseEntity.ok(arbreVM);
@@ -50,15 +51,21 @@ public class ArbreController {
             return ResponseEntity.badRequest().body("Erreur lors de la suppression : " + e.getMessage());
         }
     }
-    @PutMapping("{id}")
-    public ResponseEntity<?> update(@PathVariable Integer id ,@RequestBody ArbreDTO arbreDTO){
+    @PutMapping("{IdArbre}")
+    public ResponseEntity<?> update(@PathVariable Integer IdArbre ,@RequestBody Integer idChamp){
         try {
-            Arbre arbre =arbreMapper.toEntity(arbreDTO);
-            Arbre updatedArbre = arbreService.update(arbre, id);
+
+            Arbre updatedArbre = arbreService.update(IdArbre, idChamp);
             return ResponseEntity.ok("la arbre est bien modifier  de l'id"+ updatedArbre);
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+    }
+    @GetMapping("getAge/{id}")
+    public ResponseEntity<?> getAge(@PathVariable Integer id){
+        Arbre arbre = arbreService.getArbreId(id);
+        Integer age = arbreService.getAge(arbre);
+        return ResponseEntity.ok(age);
     }
 
 }

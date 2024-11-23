@@ -3,6 +3,7 @@ package com.elouissi.sitronix.domain;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 
 @Entity
@@ -19,6 +20,13 @@ public class Arbre {
         this.detailRecoltes = detailRecoltes;
     }
 
+    public Integer getAge() {
+        if (this.date_plantation == null) {
+            throw new IllegalStateException("La date de plantation n'est pas définie.");
+        }
+        Period age = Period.between(this.date_plantation, LocalDate.now());
+        return age.getYears();
+    }
     public Integer getId() {
         return id;
     }

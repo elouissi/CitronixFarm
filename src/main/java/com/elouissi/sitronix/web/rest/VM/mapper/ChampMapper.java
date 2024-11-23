@@ -8,7 +8,9 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface ChampMapper {
-    Champ toEntity(ChampVM champVM);
+    Champ toEntity(ChampDTO champDTO);
+
     ChampDTO toDTO(Champ champ);
+    ChampVM toVM(Champ champ);
     PageChampVM toPageChampVm(Champ champ);
 }

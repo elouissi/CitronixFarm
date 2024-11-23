@@ -1,0 +1,70 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1732235716226-1
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_recolte
+                  name: id
+                  type: INT
+              - column:
+                  name: quantite_totale
+                  type: FLOAT
+              - column:
+                  name: date_recolte
+                  type: DATE
+              - column:
+                  name: saison
+                  type: VARCHAR(255)
+            tableName: recolte
+  - changeSet:
+      id: 1732235716226-2
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: recolte_id
+            baseTableName: detail_recolte
+            constraintName: FK_DETAILRECOLTE_ON_RECOLTE
+            referencedColumnNames: id
+            referencedTableName: recolte
+  - changeSet:
+      id: 1732235716226-3
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: recolte_id
+            baseTableName: vente
+            constraintName: FK_VENTE_ON_RECOLTE
+            referencedColumnNames: id
+            referencedTableName: recolte
+  - changeSet:
+      id: 1732235716226-4
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: recolte_id
+            baseTableName: recolte_detail_recoltes
+            constraintName: fk_recdetrec_on_recolte
+            referencedColumnNames: id
+            referencedTableName: recolte
+  - changeSet:
+      id: 1732235716226-5
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: recolte_id
+            baseTableName: recolte_ventes
+            constraintName: fk_recven_on_recolte
+            referencedColumnNames: id
+            referencedTableName: recolte
+

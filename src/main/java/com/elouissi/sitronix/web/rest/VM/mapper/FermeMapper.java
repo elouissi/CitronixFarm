@@ -9,8 +9,9 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface FermeMapper {
-    Ferme ToEntity(FermeVM fermeVM);
+    Ferme ToEntity(FermeDTO fermeDTO);
     FermeDTO toDTO(Ferme ferme);
+    FermeVM toVM(Ferme ferme);
 
     PageFermeVM toPageFermeVM(Ferme ferme);
 
