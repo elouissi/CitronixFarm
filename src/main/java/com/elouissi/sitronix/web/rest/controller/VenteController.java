@@ -36,8 +36,9 @@ public class VenteController {
 
     // Read all
     @GetMapping
-    public ResponseEntity<List<Vente>> getAllVentes() {
-        return ResponseEntity.ok(venteService.findAll());
+    public ResponseEntity<List<VenteVM>> getAllVentes() {
+        List<VenteVM> venteVMList = venteService.findAll().stream().map(venteMapper::toVM).toList();
+        return ResponseEntity.ok(venteVMList);
     }
 
     @GetMapping("/{id}")
@@ -48,8 +49,6 @@ public class VenteController {
             return ResponseEntity.notFound().build();
         }
     }
-
-    // Update
     @PutMapping("/{id}")
     public ResponseEntity<?> updateVente(@PathVariable Integer id, @RequestBody @Valid VenteDTO venteDTO) {
         try {
@@ -60,12 +59,11 @@ public class VenteController {
         }
     }
 
-    // Delete
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteVente(@PathVariable Integer id) {
         try {
             venteService.delete(id);
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok("la vendu est supprimé");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
