@@ -13,18 +13,21 @@ import java.util.Optional;
 @Service("service")
 public class VenteService implements VenteInterface {
     private VenteRepository venteRepository;
-    private final RecolteRepository recolteRepository;
+    private final RecolteService recolteService;
 
     public VenteService(VenteRepository venteRepository,
-                        RecolteRepository recolteRepository) {
+                        RecolteService recolteService) {
         this.venteRepository = venteRepository;
-        this.recolteRepository = recolteRepository;
+        this.recolteService = recolteService;
     }
 
     @Override
     public Vente save(Integer recolteId, Vente vente) {
-        Optional<Recolte> recolte = recolteRepository.findById(recolteId);
+        Optional<Recolte> recolte = recolteService.findById(recolteId);
         if (recolte.isPresent()) {
+            if (venteRepository.existsByRecolte(recolte.get())){
+               throw new RuntimeException("cette recolte est deja vendus") ;
+            }
             vente.setRecolte(recolte.get());
             vente.setRevenu(vente.getQuantite() * vente.getPrix_unitaire());
             return venteRepository.save(vente);
@@ -39,7 +42,7 @@ public class VenteService implements VenteInterface {
 
     @Override
     public List<Vente> findAll() {
-        return null;
+        return venteRepository.findAll();
     }
 
     public Vente update(Integer id, Vente updatedVente) {
