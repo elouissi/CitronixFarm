@@ -1,14 +1,12 @@
 package com.elouissi.sitronix.web.rest.VM.mapper;
 
 import com.elouissi.sitronix.domain.DetailRecolte;
-import com.elouissi.sitronix.domain.Recolte;
 import com.elouissi.sitronix.service.DTO.RecolteDTO;
 import com.elouissi.sitronix.web.rest.VM.DetailRecolteVM;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "Spring")
-public interface DeatilRecolteMapper {
+public interface DetailRecolteMapper {
     DetailRecolteVM toVM(DetailRecolte detailRecolte);
 
 

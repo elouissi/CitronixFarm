@@ -10,7 +10,7 @@ import java.util.Optional;
 
 
 public interface RecolteInterface {
-    Recolte save(Recolte recolte);
+    Recolte save(Integer idChamp,Recolte recolte);
     Optional<Recolte> findById(Integer id);
     List<Recolte> findAll();
     Recolte update(Integer id, Recolte recolte);

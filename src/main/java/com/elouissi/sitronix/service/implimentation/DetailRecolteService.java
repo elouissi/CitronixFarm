@@ -1,14 +1,15 @@
 package com.elouissi.sitronix.service.implimentation;
 
 import com.elouissi.sitronix.domain.Arbre;
+import com.elouissi.sitronix.domain.Champ;
 import com.elouissi.sitronix.domain.DetailRecolte;
 import com.elouissi.sitronix.domain.Recolte;
 import com.elouissi.sitronix.repository.DetailRecolteRepository;
 import com.elouissi.sitronix.service.DetailRecolteInterface;
 import com.elouissi.sitronix.utils.ProductiviteUtil;
-import com.elouissi.sitronix.web.rest.VM.DetailRecolteVM;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -16,30 +17,47 @@ import java.util.Optional;
 @Service
 public class DetailRecolteService implements DetailRecolteInterface {
     private final DetailRecolteRepository detailRecolteRepository;
-    private final ArbreService arbreService;
+    private final ChampService champService;
     private final RecolteService recolteService;
 
-    public DetailRecolteService(DetailRecolteRepository detailRecolteRepository, ArbreService arbreService, RecolteService recolteService) {
+    public DetailRecolteService(DetailRecolteRepository detailRecolteRepository, ChampService champService, RecolteService recolteService) {
         this.detailRecolteRepository = detailRecolteRepository;
-        this.arbreService = arbreService;
+        this.champService = champService;
         this.recolteService = recolteService;
     }
 
 
 
     @Override
-    public DetailRecolte save(Integer idArbre, Integer idRecolte) {
-        Arbre arbre = arbreService.getArbreId(idArbre);
-        Recolte recolte = recolteService.findById(idRecolte)
-                .orElseThrow(() -> new NoSuchElementException("Recolte avec l'ID " + idRecolte + " n'a pas été trouvée."));
-        DetailRecolte detailRecolte = new DetailRecolte();
-        detailRecolte.setRecolte(recolte);
-        detailRecolte.setArbre(arbre);
-        Float prodictivité = ProductiviteUtil.calculerProductivite(arbre);
-        detailRecolte.setQuantite_recoltee(prodictivité);
+    public List<DetailRecolte> save(Integer idChamp, Integer idRecolte) {
+        Champ champ = champService.getChampId(idChamp);
+        if (champ == null) {
+            throw new NoSuchElementException("Champ avec l'ID " + idChamp + " n'a pas été trouvé.");
+        }
 
-        return detailRecolteRepository.save(detailRecolte);
+        Recolte recolte = recolteService.findById(idRecolte)
+                .orElseThrow(() -> new NoSuchElementException("Récolte avec l'ID " + idRecolte + " n'a pas été trouvée."));
+
+        List<DetailRecolte> detailsRecolte = new ArrayList<>();
+
+        for (Arbre arbre : champ.getArbres()) {
+            if (detailRecolteRepository.existsDetailRecolteByArbre(arbre)) {
+                throw new IllegalArgumentException("l'arbre est deja recolter");
+            }
+
+            DetailRecolte detailRecolte = new DetailRecolte();
+            detailRecolte.setRecolte(recolte);
+            detailRecolte.setArbre(arbre);
+
+            Float productivite = ProductiviteUtil.calculerProductivite(arbre);
+            detailRecolte.setQuantite_recoltee(productivite);
+
+            detailsRecolte.add(detailRecolteRepository.save(detailRecolte));
+        }
+
+        return detailsRecolte;
     }
+
 
     @Override
     public Optional<DetailRecolte> findById(Integer id) {

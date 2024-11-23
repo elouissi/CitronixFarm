@@ -1,7 +1,6 @@
-package com.elouissi.sitronix.domain;
+package com.elouissi.sitronix.web.rest.VM;
 
 import com.elouissi.sitronix.domain.enums.Saison;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
@@ -9,21 +8,15 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 import java.util.List;
 
-@Builder
-@NoArgsConstructor
 @AllArgsConstructor
-@Entity
-public class Recolte {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+@NoArgsConstructor
+@Builder
+public class PageRecolteVM {
     private Integer id;
-    private Float quantite_totale ;
+    private Float quantite_totale;
     private LocalDate date_recolte;
-    @Enumerated(EnumType.STRING)
     private Saison saison;
-    @OneToMany
-    private List<DetailRecolte> detailRecoltes;
-
+    private List<DetailRecolteVM> detailRecolteVMList;
 
     public Integer getId() {
         return id;
@@ -57,13 +50,11 @@ public class Recolte {
         this.saison = saison;
     }
 
-    public List<DetailRecolte> getDetailRecoltes() {
-        return detailRecoltes;
+    public List<DetailRecolteVM> getDetailRecolteVMList() {
+        return detailRecolteVMList;
     }
 
-    public void setDetailRecoltes(List<DetailRecolte> detailRecoltes) {
-        this.detailRecoltes = detailRecoltes;
+    public void setDetailRecolteVMList(List<DetailRecolteVM> detailRecolteVMList) {
+        this.detailRecolteVMList = detailRecolteVMList;
     }
-
-
 }

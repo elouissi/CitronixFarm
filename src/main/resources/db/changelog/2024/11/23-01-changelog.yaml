@@ -1,0 +1,26 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1732367259964-1
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: recolte_ventes
+            constraintName: fk_recven_on_recolte
+  - changeSet:
+      id: 1732367259964-2
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: recolte_ventes
+            constraintName: fkeu9fhvgltmuhiu81pr7v5y15f
+  - changeSet:
+      id: 1732367259964-4
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - dropTable:
+            cascadeConstraints: true
+            tableName: recolte_ventes
+

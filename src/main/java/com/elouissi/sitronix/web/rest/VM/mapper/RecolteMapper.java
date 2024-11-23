@@ -13,13 +13,11 @@ public interface RecolteMapper {
 
 
     @Mapping(target = "detailRecoltes", ignore = true)
-    @Mapping(target = "ventes", ignore = true)
     Recolte toEntity(RecolteVM recolteVM);
 
     RecolteDTO toDTO(Recolte recolte);
 
 
     @Mapping(target = "detailRecoltes", ignore = true)
-    @Mapping(target = "ventes", ignore = true)
     Recolte toEntity(RecolteDTO recolteDTO);
 }

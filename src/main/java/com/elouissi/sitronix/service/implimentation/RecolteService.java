@@ -1,10 +1,12 @@
 package com.elouissi.sitronix.service.implimentation;
 
+import com.elouissi.sitronix.domain.DetailRecolte;
 import com.elouissi.sitronix.domain.Recolte;
 import com.elouissi.sitronix.domain.enums.Saison;
 import com.elouissi.sitronix.repository.RecolteRepository;
 import com.elouissi.sitronix.service.RecolteInterface;
 import com.elouissi.sitronix.utils.SaisonUtil;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -12,17 +14,21 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
-@Service
+@Service("service1")
 public class RecolteService implements RecolteInterface {
 
 private final RecolteRepository recolteRepository;
+private final DetailRecolteService detailRecolteService;
 
-    public RecolteService(RecolteRepository recolteRepository) {
+    public RecolteService(RecolteRepository recolteRepository,@Lazy DetailRecolteService detailRecolteService) {
         this.recolteRepository = recolteRepository;
+        this.detailRecolteService = detailRecolteService;
     }
 
+
+
     @Override
-    public Recolte save(Recolte recolte) {
+    public Recolte save(Integer idChamp, Recolte recolte) {
         Saison saison = SaisonUtil.getSaisonFromDate(recolte.getDate_recolte());
         recolte.setSaison(saison);
         recolte.setQuantite_totale(0f);
@@ -30,9 +36,16 @@ private final RecolteRepository recolteRepository;
         if (!isValidRecolteForSeason(recolte)) {
             throw new IllegalArgumentException("Une récolte existe déjà pour cette saison");
         }
+        Recolte savedRecolte = recolteRepository.save(recolte);
 
+        List<DetailRecolte> detailRecoltes = detailRecolteService.save(idChamp, savedRecolte.getId());
 
-        return recolteRepository.save(recolte) ;
+        float quantiteTotale = detailRecoltes.stream()
+                .map(DetailRecolte::getQuantite_recoltee)
+                .reduce(0f, Float::sum);
+        savedRecolte.setQuantite_totale(quantiteTotale);
+
+        return recolteRepository.save(savedRecolte);
     }
 
     @Override
@@ -63,9 +76,7 @@ private final RecolteRepository recolteRepository;
         if (recolteDetails.getSaison() != null) {
             recolteExistante.setSaison(recolteDetails.getSaison());
         }
-        if (recolteDetails.getVentes() != null) {
-            recolteExistante.setVentes(recolteDetails.getVentes());
-        }
+
         return recolteRepository.save(recolteExistante);
     }
 

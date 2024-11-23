@@ -8,7 +8,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface DetailRecolteInterface {
-    DetailRecolte save(Integer idArbre , Integer idRecolte);
+    public List<DetailRecolte> save(Integer idChamp, Integer idRecolte) ;
+
     Optional<DetailRecolte> findById(Integer id);
     List<DetailRecolte> findAll();
     DetailRecolte update(Integer id, DetailRecolte detailRecolte);
