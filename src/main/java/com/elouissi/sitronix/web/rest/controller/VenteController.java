@@ -59,6 +59,7 @@ public class VenteController {
         }
     }
 
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteVente(@PathVariable Integer id) {
         try {

@@ -37,6 +37,27 @@ public class FermeController {
           return ResponseEntity.badRequest().body(e.getMessage());
       }
   }
+    @GetMapping("/search")
+    public ResponseEntity<Page<PageFermeVM>> searchFermes(
+            @RequestParam(required = false) String nom,
+            @RequestParam(required = false) Double minSuperficie,
+            @RequestParam(required = false) Double maxSuperficie,
+            @RequestParam(required = false) String localisation,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "id") String sortBy
+    ) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
+        Page<Ferme> resultPage = fermeService.searchFermes(nom, minSuperficie, maxSuperficie, localisation, pageable);
+
+        List<PageFermeVM> fermeVMList = resultPage.getContent()
+                .stream()
+                .map(fermeMapper::toPageFermeVM)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(new PageImpl<>(fermeVMList, pageable, resultPage.getTotalElements()));
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<?> updateFerme(@PathVariable Integer id, @RequestBody FermeDTO fermeDTO) {
         try {

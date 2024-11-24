@@ -21,5 +21,16 @@ public interface RecolteRepository extends JpaRepository<Recolte,Integer> {
             @Param("endDate") LocalDate endDate
     );
     List<Recolte> getRecoltesBySaison(Saison saison);
+    @Query("""
+    SELECT CASE WHEN COUNT(r) > 0 THEN true ELSE false END
+    FROM Recolte r
+    JOIN r.detailRecoltes dr
+    JOIN dr.arbre a
+    JOIN a.champ c
+    WHERE c.id = :champId AND r.saison = :saison
+""")
+    boolean existsByChampIdAndSaison(@Param("champId") Integer champId, @Param("saison") Saison saison);
+
+
 }
 
