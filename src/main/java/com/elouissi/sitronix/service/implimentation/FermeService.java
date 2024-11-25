@@ -3,26 +3,41 @@ package com.elouissi.sitronix.service.implimentation;
 import com.elouissi.sitronix.domain.Champ;
 import com.elouissi.sitronix.domain.Ferme;
 import com.elouissi.sitronix.repository.FermeRepository;
+import com.elouissi.sitronix.repository.impl.FermeRepositoryImpl;
 import com.elouissi.sitronix.service.FermeInterface;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class FermeService implements FermeInterface {
 
     private final FermeRepository fermeRepository;
     private final ChampService champService;
+    private final FermeRepositoryImpl fermeRepositoryImpl;
 
-
-
-    public FermeService(FermeRepository fermeRepository,ChampService champService) {
+    public FermeService(FermeRepository fermeRepository, ChampService champService, FermeRepositoryImpl fermeRepositoryImpl) {
         this.fermeRepository = fermeRepository;
         this.champService = champService;
-
+        this.fermeRepositoryImpl = fermeRepositoryImpl;
     }
+
+
+
+
+
 
     @Override
     public Ferme save(Ferme ferme) {
@@ -32,6 +47,10 @@ public class FermeService implements FermeInterface {
         return fermeRepository.save(ferme);
     }
 
+
+    public Page<Ferme>  searchFermes(String nom, Double minSuperficie, Double maxSuperficie, String localisation, Pageable pageable){
+        return fermeRepositoryImpl.searchFermes(nom,minSuperficie,maxSuperficie,localisation,pageable);
+    }
     public Ferme update(Ferme ferme, Integer id) {
         return fermeRepository.findById(id)
                 .map(existingFerme -> {

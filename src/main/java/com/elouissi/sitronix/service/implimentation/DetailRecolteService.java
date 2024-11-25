@@ -7,6 +7,7 @@ import com.elouissi.sitronix.domain.Recolte;
 import com.elouissi.sitronix.repository.DetailRecolteRepository;
 import com.elouissi.sitronix.service.DetailRecolteInterface;
 import com.elouissi.sitronix.utils.ProductiviteUtil;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ public class DetailRecolteService implements DetailRecolteInterface {
 
 
 
+    @Transactional
     @Override
     public List<DetailRecolte> save(Integer idChamp, Integer idRecolte) {
         Champ champ = champService.getChampId(idChamp);
@@ -44,6 +46,8 @@ public class DetailRecolteService implements DetailRecolteInterface {
             if (detailRecolteRepository.existsDetailRecolteByArbre(arbre)) {
                 throw new IllegalArgumentException("l'arbre est deja recolter");
             }
+
+
 
             DetailRecolte detailRecolte = new DetailRecolte();
             detailRecolte.setRecolte(recolte);
