@@ -6,6 +6,7 @@ import com.elouissi.sitronix.domain.enums.Saison;
 import com.elouissi.sitronix.repository.RecolteRepository;
 import com.elouissi.sitronix.service.RecolteInterface;
 import com.elouissi.sitronix.utils.SaisonUtil;
+import jakarta.transaction.Transactional;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
@@ -27,15 +28,18 @@ private final DetailRecolteService detailRecolteService;
 
 
 
+    @Transactional
     @Override
     public Recolte save(Integer idChamp, Recolte recolte) {
         Saison saison = SaisonUtil.getSaisonFromDate(recolte.getDate_recolte());
         recolte.setSaison(saison);
         recolte.setQuantite_totale(0f);
 
-        if (!isValidRecolteForSeason(recolte)) {
-            throw new IllegalArgumentException("Une récolte existe déjà pour cette saison");
+        if (checkRecolteExists(idChamp, saison)) {
+            throw new IllegalArgumentException("Une récolte existe déjà pour ce champ et cette saison.");
         }
+
+
         Recolte savedRecolte = recolteRepository.save(recolte);
 
         List<DetailRecolte> detailRecoltes = detailRecolteService.save(idChamp, savedRecolte.getId());
@@ -47,6 +51,12 @@ private final DetailRecolteService detailRecolteService;
 
         return recolteRepository.save(savedRecolte);
     }
+
+    public boolean checkRecolteExists(Integer champId, Saison saison) {
+        return recolteRepository.existsByChampIdAndSaison(champId, saison);
+    }
+
+
 
     @Override
     public Optional<Recolte> findById(Integer id) {
@@ -83,7 +93,7 @@ private final DetailRecolteService detailRecolteService;
 
     @Override
     public void delete(Integer id) {
-
+//        recolteRepository.delete();
     }
 
     @Override
