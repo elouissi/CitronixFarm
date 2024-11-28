@@ -6,6 +6,7 @@ import com.elouissi.sitronix.repository.FermeRepository;
 import com.elouissi.sitronix.repository.impl.FermeRepositoryImpl;
 import com.elouissi.sitronix.service.FermeInterface;
 
+import com.elouissi.sitronix.web.errors.ObligationNomFerme;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -33,16 +34,10 @@ public class FermeService implements FermeInterface {
         this.champService = champService;
         this.fermeRepositoryImpl = fermeRepositoryImpl;
     }
-
-
-
-
-
-
     @Override
     public Ferme save(Ferme ferme) {
         if (ferme.getNom() == null || ferme.getNom().isEmpty()) {
-            throw new IllegalArgumentException("Le nom de la ferme est obligatoire.");
+            throw new ObligationNomFerme("Le nom de la ferme est obligatoire.");
         }
         return fermeRepository.save(ferme);
     }

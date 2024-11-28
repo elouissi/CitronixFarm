@@ -45,7 +45,7 @@ public class ChampServiceTest {
 
     @Test
     void testSave_Success() {
-        when(champRepository.save(any(Champ.class))).thenReturn(champ);
+            when(champRepository.save(any(Champ.class))).thenReturn(champ);
 
         Champ savedChamp = champService.save(champ, ferme);
 

@@ -7,6 +7,7 @@ import com.elouissi.sitronix.domain.Recolte;
 import com.elouissi.sitronix.repository.DetailRecolteRepository;
 import com.elouissi.sitronix.service.DetailRecolteInterface;
 import com.elouissi.sitronix.utils.ProductiviteUtil;
+import com.elouissi.sitronix.web.errors.ArbreDejaRecolter;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -44,16 +45,18 @@ public class DetailRecolteService implements DetailRecolteInterface {
 
         for (Arbre arbre : champ.getArbres()) {
             if (detailRecolteRepository.existsDetailRecolteByArbre(arbre)) {
-                throw new IllegalArgumentException("l'arbre est deja recolter");
+                throw new ArbreDejaRecolter("l'arbre est deja recolter");
             }
-
-
-
             DetailRecolte detailRecolte = new DetailRecolte();
             detailRecolte.setRecolte(recolte);
             detailRecolte.setArbre(arbre);
 
-            Float productivite = ProductiviteUtil.calculerProductivite(arbre);
+            if (arbre.getDate_plantation().getMonthValue() > 2 && arbre.getDate_plantation().getMonthValue() < 12){
+
+            Float productivite = (float) (arbre.calculerProductivite() - ( arbre.calculerProductivite() * 0.3));
+
+            }
+            Float productivite = arbre.calculerProductivite();
             detailRecolte.setQuantite_recoltee(productivite);
 
             detailsRecolte.add(detailRecolteRepository.save(detailRecolte));

@@ -18,4 +18,15 @@ public class GlobalExceptionHandler {
         exception.getBindingResult().getFieldErrors().forEach(error -> errors.put(error.getField(), error.getDefaultMessage()));
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(ObligationNomFerme.class)
+    public ResponseEntity<String> handleObligationNomFerme(ObligationNomFerme ex){
+        return new ResponseEntity<>(ex.getMessage(),HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler(ArbreDejaRecolter.class)
+    public ResponseEntity<String> handleArbreDejaRecolter(ArbreDejaRecolter ex){
+        return new ResponseEntity<>(ex.getMessage(),HttpStatus.BAD_REQUEST);
+    }
+
+
 }

@@ -1,5 +1,6 @@
 package com.elouissi.sitronix.domain;
 
+import com.elouissi.sitronix.utils.ProductiviteUtil;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -27,6 +28,18 @@ public class Arbre {
         Period age = Period.between(this.date_plantation, LocalDate.now());
         return age.getYears();
     }
+    public Float calculerProductivite() {
+        Integer age = this.getAge();
+
+        if (age < 3) {
+            return 2.5f;
+        } else if (age <= 10) {
+            return 12.0f;
+        } else {
+            return 20.0f;
+        }
+    }
+
     public Integer getId() {
         return id;
     }

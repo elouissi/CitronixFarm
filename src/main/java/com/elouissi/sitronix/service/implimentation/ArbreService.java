@@ -36,11 +36,11 @@ public class ArbreService implements ArbreInterface {
 
 
         int currentMonth = LocalDate.now().minusMonths(7).getMonthValue();
-        if (currentMonth < 3 || currentMonth >5)
-        {
-            throw new IllegalArgumentException("voous devez creer une arbre dans la date de plantation entre mai et mars");
-        }
-
+//        if (currentMonth < 3 || currentMonth >5)
+//        {
+//            throw new IllegalArgumentException("voous devez creer une arbre dans la date de plantation entre mai et mars");
+//        }
+//
 
         if ( division > 100){
             throw new IllegalArgumentException("vous avez dépasser Le nombre des arbres par hectar.");
