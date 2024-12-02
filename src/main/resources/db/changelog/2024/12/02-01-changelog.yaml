@@ -1,0 +1,41 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1733132907787-1
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createSequence:
+            incrementBy: 50
+            sequenceName: app_user_seq
+            startValue: 1
+  - changeSet:
+      id: 1733132907787-2
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_app_user
+                  name: id
+                  type: INT
+              - column:
+                  name: firstname
+                  type: VARCHAR(255)
+              - column:
+                  name: lastname
+                  type: VARCHAR(255)
+              - column:
+                  name: email
+                  type: VARCHAR(255)
+              - column:
+                  name: password
+                  type: VARCHAR(255)
+              - column:
+                  name: role
+                  type: VARCHAR(255)
+            tableName: app_user
+
